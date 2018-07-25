@@ -1,0 +1,54 @@
+buildscript
+{
+  ext
+  {
+    springBootVersion = '1.5.9.RELEASE'
+  }
+  repositories
+  {
+    mavenLocal()
+    mavenCentral()
+  }
+  dependencies
+  {
+    classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+  }
+}
+
+task createWrapper(type: Wrapper) {
+  gradleVersion = '4.9'
+}
+
+ext
+{
+  vavrName    = 'io.vavr'
+  vavrVersion = '0.9.2'
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+
+group               = 'btr.sc.course'
+version             = '1.0'
+sourceCompatibility = JavaVersion.VERSION_1_8
+
+configurations
+{
+  compile.exclude module: 'spring-boot-starter-tomcat'
+}
+
+repositories
+{
+  mavenLocal()
+  mavenCentral()
+}
+
+dependencies
+{
+  compile     "org.springframework.boot:spring-boot-starter-web",
+              "org.springframework.boot:spring-boot-starter-undertow"
+  compileOnly "org.projectlombok:lombok"
+  compile     "${vavrName}:vavr:${vavrVersion}",
+              "${vavrName}:vavr-jackson:${vavrVersion}"
+}
