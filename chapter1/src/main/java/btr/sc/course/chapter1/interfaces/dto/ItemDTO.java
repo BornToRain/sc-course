@@ -7,6 +7,14 @@ import java.util.Date;
 public interface ItemDTO
 {
   @AllArgsConstructor
+  final class Item implements ItemDTO
+  {
+    public final String name;
+    public final Date   createTime;
+    public final Date   updateTime;
+  }
+
+  @AllArgsConstructor
   final class Create implements ItemDTO
   {
     public final String name;
@@ -17,13 +25,5 @@ public interface ItemDTO
   {
     public final String id;
     public final String name;
-  }
-
-  @AllArgsConstructor
-  final class Item implements ItemDTO
-  {
-    public final String name;
-    public final Date   createTime;
-    public final Date   updateTime;
   }
 }

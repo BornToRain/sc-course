@@ -1,14 +1,13 @@
 package btr.sc.course.chapter1.domain;
 
-
 import io.vavr.collection.List;
 import io.vavr.control.Option;
 
 public interface ItemRepository
 {
-  String       insert(Item d);
   List<Item>   findAll();
-  Option<Item> findById(String id);
-  Item         update(Item d);
+  Option<Item> findOne(String id);
+  String       insert(Item data);
+  Option<Item> update(Item data);
   String       delete(String id);
 }

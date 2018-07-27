@@ -19,6 +19,18 @@ public class ItemService
 {
   private final ItemRepository repository;
 
+  public List<ItemDTO.Item> getAll()
+  {
+    return repository.findAll()
+             .map(ItemAssembler::toDTO);
+  }
+
+  public Option<ItemDTO.Item> getOne(final String id)
+  {
+    return repository.findOne(id)
+             .map(ItemAssembler::toDTO);
+  }
+
   public String create(final ItemDTO.Create request)
   {
     val id     = IdWorker.getId();
@@ -32,25 +44,15 @@ public class ItemService
     return repository.insert(domain);
   }
 
-  public List<ItemDTO.Item> getAll()
-  {
-    return repository.findAll()
-             .map(ItemAssembler::toDTO);
-  }
-
-  public Option<ItemDTO.Item> getById(final String id)
-  {
-    return repository.findById(id)
-             .map(ItemAssembler::toDTO);
-  }
-
-  public ItemDTO.Item update(final ItemDTO.Update request)
+  public Option<ItemDTO.Item> update(final ItemDTO.Update request)
   {
     val domain = new Item();
     domain.setId(request.id);
     domain.setName(request.name);
+    domain.setUpdateTime(new Date());
 
-    return ItemAssembler.toDTO(repository.update(domain));
+    return repository.update(domain)
+             .map(ItemAssembler::toDTO);
   }
 
   public String delete(final String id)

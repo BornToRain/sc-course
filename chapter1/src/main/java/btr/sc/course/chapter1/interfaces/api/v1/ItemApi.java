@@ -2,7 +2,6 @@ package btr.sc.course.chapter1.interfaces.api.v1;
 
 import btr.sc.course.chapter1.application.service.ItemService;
 import btr.sc.course.chapter1.interfaces.dto.ItemDTO;
-import io.vavr.collection.List;
 import lombok.AllArgsConstructor;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
@@ -25,35 +24,32 @@ public class ItemApi
 {
   private final ItemService service;
 
-  @PostMapping
-  public ResponseEntity create(@RequestBody final ItemDTO.Create request, final HttpServletRequest r)
-  {
-    val id = service.create(request);
-
-    return ResponseEntity.created(URI.create(r.getRequestURL().append("/").append(id).toString())).build();
-  }
-
   @GetMapping
-  public List<ItemDTO.Item> list()
+  public ResponseEntity list()
   {
-    return service.getAll();
+    return ResponseEntity.ok(service.getAll());
   }
 
   @GetMapping("{id}")
   public ResponseEntity show(@PathVariable final String id)
   {
-    return service.getById(id)
-             .map(d -> ResponseEntity.ok()
-                         .body(d))
-             .getOrElse(ResponseEntity.notFound().build());
+    return service.getOne(id)
+             .map(ResponseEntity::ok)
+             .getOrElse(() -> ResponseEntity.notFound().build());
+  }
+
+  @PostMapping
+  public ResponseEntity create(@RequestBody final ItemDTO.Create request, final HttpServletRequest r)
+  {
+    val id = service.create(request);
+
+    return ResponseEntity.created(URI.create(r.getRequestURL()+"/"+id)).build();
   }
 
   @PutMapping("{id}")
   public ResponseEntity edit(@PathVariable final String id, @RequestBody final ItemDTO.Update request)
   {
-    val data = service.update(request);
-
-    return ResponseEntity.ok(data);
+    return ResponseEntity.ok(service.update(request));
   }
 
   @DeleteMapping("{id}")
@@ -63,4 +59,6 @@ public class ItemApi
 
     return ResponseEntity.noContent().build();
   }
+
 }
+

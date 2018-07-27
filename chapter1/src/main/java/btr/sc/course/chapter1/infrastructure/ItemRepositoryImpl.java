@@ -15,44 +15,45 @@ public class ItemRepositoryImpl implements ItemRepository
   private Map<String, Item> map = HashMap.empty();
 
   @Override
-  public String insert(final Item d)
-  {
-    val id = IdWorker.getId();
-    d.setId(id);
-    map    = map.put(id, d);
-
-    return id;
-  }
-
-  @Override
   public List<Item> findAll()
   {
-    return map.map(t -> t._2).toList();
+    return map.values().toList();
   }
 
   @Override
-  public Option<Item> findById(final String id)
+  public Option<Item> findOne(final String id)
   {
     return map.get(id);
   }
 
   @Override
-  public Item update(final Item d)
+  public String insert(final Item data)
   {
-    val id = d.getId();
-    return map.get(id)
-             .map(data ->
-             {
-               data.setName(d.getName());
-               map.put(id, data);
-               return data;
-             }).getOrElse(d);
+    val id = data.getId();
+    map    = map.put(id, data);
+
+    return id;
+  }
+
+  @Override
+  public Option<Item> update(final Item data)
+  {
+    val id = data.getId();
+
+    return map.get(id).map(d ->
+    {
+      d.setName(data.getName());
+      map.put(id, d);
+
+      return d;
+    });
   }
 
   @Override
   public String delete(final String id)
   {
     map = map.remove(id);
+
     return id;
   }
 }
