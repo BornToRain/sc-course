@@ -1,0 +1,10 @@
+server:
+  port: 8082
+spring:
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        prefer-agent-address: true
+  application:
+    name: user
