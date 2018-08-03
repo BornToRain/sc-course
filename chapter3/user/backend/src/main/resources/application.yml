@@ -1,0 +1,20 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: user
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        prefer-agent-address: true
+
+feign:
+  compression:
+    request.enabled: true
+    response.enabled: true
+  hystrix.enabled: false
+
+logging:
+  level:
+    btr.sc.course.chapter3.infrastructure.service.ItemService: debug

@@ -1,0 +1,13 @@
+dependencies
+{
+  compile "${bootName}:spring-boot-starter-web",
+          "${bootName}:spring-boot-starter-undertow",
+          "${bootName}:spring-boot-starter-actuator",
+          "${cloudName}:spring-cloud-starter-consul-discovery",
+          "${cloudName}:spring-cloud-starter-openfeign"
+  compile "${vavrName}:vavr:${vavrVersion}",
+          "${vavrName}:vavr-jackson:${vavrVersion}"
+  compile "${bootName}:spring-boot-starter-data-jpa",
+          "com.h2database:h2"
+  compile "org.projectlombok:lombok"
+}

@@ -1,0 +1,10 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: item
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        prefer-agent-address: true

@@ -1,0 +1,6 @@
+dependencies
+{
+  compile project(":core"),
+  project(":user:protocol"),
+  project(":item:protocol")
+}
